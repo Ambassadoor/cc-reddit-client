@@ -4,7 +4,8 @@ import he from 'he';
 const Post = (props) => {
     const endpoint = props.endpoint;
     const [posts, setPosts] = useState(null);
-    let postNumber = 6;
+    const [postNumber, setPostNumber] = useState(0);
+
     const postPath = posts?.data?.children?.[postNumber]?.data;
 
     useEffect(() => {
@@ -13,6 +14,34 @@ const Post = (props) => {
         .then(posts => setPosts(posts))
         .catch(error => console.error('Error:', error))
     }, []);
+
+    const prevPost = () => {
+        if (postNumber > 0) {
+            setPostNumber(prev => prev -1);
+        }
+    }
+
+    const nextPost = () => {
+        const childrenLength = posts?.data?.children.length;
+        if (childrenLength && postNumber < childrenLength - 1) {
+            setPostNumber(prev => prev + 1)
+        }
+    }
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'ArrowLeft') {
+                prevPost();
+            } else if (event.key === 'ArrowRight') {
+                nextPost();
+            }
+        }
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        };
+    }, );
 
     if (!postPath) {
         return null; // or some other fallback behavior
@@ -25,9 +54,12 @@ const Post = (props) => {
             <h3>{postPath.title}</h3>
             {postPath.url && !postPath.is_video && !postPath.selftext && <a href={postPath.url}>{postPath.url}</a>}
             {postPath.selftext_html && <div dangerouslySetInnerHTML={{ __html: decodedHtml }} />}
-            {!postPath.is_video && postPath.thumbnail && postPath.thumbnail != 'self' && <img src={postPath.thumbnail} alt="Thumbnail" />}
+            {!postPath.is_video && postPath.thumbnail && postPath.thumbnail !== 'self' && <img src={postPath.thumbnail} alt="Thumbnail" />}
             {postPath.is_video && <video controls><source src={postPath.media.reddit_video.fallback_url} type="video/mp4"></source></video>}
-
+            <div>
+                <button onClick={prevPost} disabled={postNumber === 0}>Back {postNumber}</button>
+                <button onClick={nextPost}>Next</button>
+            </div>
         </div>
     )
 }
