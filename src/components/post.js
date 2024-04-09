@@ -51,17 +51,17 @@ const Post = (props) => {
 
     return (
         <div>
-            <div>
-                <h3>{postPath.title}</h3>
-                <p>{postPath?.link_flair_text}</p>
+            <div class = 'post-title-container'>
+                <h3 class = 'post-title'>{postPath.title}</h3>
+                <p class = 'post-flair'>{postPath?.link_flair_text}</p>
             </div>
-            <div>
-                {postPath.url && !postPath.is_video && !postPath.selftext && <a href={postPath.url}>{postPath.url}</a>}
+            <div class = 'post-content-container'>
+                {/* {postPath.url && !postPath.is_video && postPath.selftext !== "" && <a href={postPath.url}>{postPath.url}</a>} */}
                 {postPath.selftext_html && <div dangerouslySetInnerHTML={{ __html: decodedHtml }} />}
                 {!postPath.is_video && postPath.thumbnail && postPath.thumbnail !== 'self' && <img src={postPath.thumbnail} alt="Thumbnail" />}
                 {postPath.is_video && <video controls><source src={postPath.media.reddit_video.fallback_url} type="video/mp4"></source></video>}
             </div>
-            <div>
+            <div class = 'post-navigation-container'>
                 <button onClick={prevPost} disabled={postNumber === 0}>Back {postNumber}</button>
                 <button onClick={nextPost}>Next</button>
             </div>
