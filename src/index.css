@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.post-content-container {
+    max-width: 500px;
+}
+
+.post-title-container {
+
+}
+
+.post-navigation-container {
+
+}
+
+.post-flair-container {
+
+}
+
+.post-title {
+}
+
+.post-flair {
+    border-radius: 10px;
+    display: inline;
+    padding-inline: 10px;
+    font-size: 12px;
+}
+
+.post-video {
+    max-width: 500px;
+}
+
+.post-image {
+    max-width: 500px;
+    max-height: 750px;
+    object-fit: contain;
+}

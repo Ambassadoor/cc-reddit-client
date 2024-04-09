@@ -53,13 +53,22 @@ const Post = (props) => {
         <div>
             <div class = 'post-title-container'>
                 <h3 class = 'post-title'>{postPath.title}</h3>
-                <p class = 'post-flair'>{postPath?.link_flair_text}</p>
             </div>
             <div class = 'post-content-container'>
                 {/* {postPath.url && !postPath.is_video && postPath.selftext !== "" && <a href={postPath.url}>{postPath.url}</a>} */}
                 {postPath.selftext_html && <div dangerouslySetInnerHTML={{ __html: decodedHtml }} />}
-                {!postPath.is_video && postPath.thumbnail && postPath.thumbnail !== 'self' && <img src={postPath.thumbnail} alt="Thumbnail" />}
-                {postPath.is_video && <video controls><source src={postPath.media.reddit_video.fallback_url} type="video/mp4"></source></video>}
+                <div class = 'post-flair-container'>
+                    <p class = 'post-flair' style={{backgroundColor: postPath?.link_flair_background_color}}>{postPath?.link_flair_text}</p>
+                </div>
+                {!postPath.is_video && postPath.thumbnail && postPath.thumbnail !== 'self' && !postPath.is_gallery && postPath.post_hint !== 'image' &&  <img class = 'post-thumbnail' style={{height:postPath.thumbnail_height, width:postPath.thumbnail_width, borderRadius: 10}} src={postPath.thumbnail} alt="Thumbnail" />}
+                {postPath.post_hint === 'image'  && (
+                    <img class='post-image' 
+                    style={{height:postPath.preview.images[0].resolutions[postPath.preview.images[0].resolutions.length -1].height,
+                        width: postPath.preview.images[0].resolutions[postPath.preview.images[0].resolutions.length -1].width}} 
+                        src={he.decode(postPath?.preview?.images[0]?.resolutions[postPath.preview.images[0].resolutions.length -1]?.url)}
+                        />
+                )}
+                {postPath.is_video && <video class= 'post-video' controls ><source src={postPath.media.reddit_video.fallback_url} type="video/mp4"></source></video>}
             </div>
             <div class = 'post-navigation-container'>
                 <button onClick={prevPost} disabled={postNumber === 0}>Back {postNumber}</button>
