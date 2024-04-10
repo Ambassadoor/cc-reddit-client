@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Post from './components/post';
+import MainPage from './components/MainPage/MainPage';
 
 function App() {
-    const [postData, setPostData] = useState(null);
 
-    useEffect(() => {
-        fetch('https://www.reddit.com/r/spaceengineers/.json')
-            .then(response => response.json())
-            .then(data => setPostData(data))
-            .catch(error => console.error('Error:', error));
-    }, []);
 
     return (
         <div>
-          <Post endpoint='https://www.reddit.com/r/spaceengineers/.json' ></Post>
+            <MainPage endpoint='https://www.reddit.com/r/spaceengineers.json'></MainPage>
         </div>
     );
 }
