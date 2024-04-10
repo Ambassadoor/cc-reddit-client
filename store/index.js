@@ -1,15 +1,15 @@
-import { configureStore} from '@reduxjs/toolkit';
-import { combineReducers} from 'redux'
-import mainPageReducer from '../src/components/MainPage/mainPageSlice';
-import compactPostReducer from '../src/components/CompactPost/compactPostSlice';
+import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers } from 'redux'
+import mainPageReducer from '../src/components/MainPage/mainPageSlice'
+import compactPostReducer from '../src/components/CompactPost/compactPostSlice'
 
 const rootReducer = combineReducers({
     mainPage: mainPageReducer,
-    compactPost: compactPostReducer
+    compactPost: compactPostReducer,
 })
 
 const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
 })
 
-export default store;
+export default store

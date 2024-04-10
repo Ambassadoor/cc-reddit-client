@@ -7,26 +7,27 @@ const postsSlice = createSlice({
         after: null,
         allPosts: null,
         loading: false,
-        error: null
+        error: null,
     },
     reducers: {
         fetchDataStart(state) {
-            state.loading = true;
-            state.error = null;
+            state.loading = true
+            state.error = null
         },
         fetchDataSuccess(state, action) {
-            state.loading = false;
-            state.before = action.payload.before;
-            state.after = action.payload.after;
-            state.allPosts = action.payload.allPosts;
+            state.loading = false
+            state.before = action.payload.before
+            state.after = action.payload.after
+            state.allPosts = action.payload.allPosts
         },
         fetchDataFailure(state, action) {
-            state.loading = false;
-            state.error = action.payload;
-        }
-    }
+            state.loading = false
+            state.error = action.payload
+        },
+    },
 })
 
-export const { fetchDataStart, fetchDataSuccess, fetchDataFailure} = postsSlice.actions;
+export const { fetchDataStart, fetchDataSuccess, fetchDataFailure } =
+    postsSlice.actions
 
-export default postsSlice.reducer;
+export default postsSlice.reducer
