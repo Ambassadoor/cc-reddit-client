@@ -7,6 +7,7 @@ import {
 import { useDispatch } from 'react-redux'
 import CompactPost from '../CompactPost/CompactPost'
 import { useSelector } from 'react-redux'
+import { selectPosts } from '../../store/selectors'
 
 const MainPage = ({ endpoint }) => {
     const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const MainPage = ({ endpoint }) => {
 
                 dispatch(fetchDataSuccess({ before, after, allPosts }))
             } catch (error) {
+                console.log(error.message)
                 dispatch(fetchDataFailure(error.message))
             }
         }
@@ -30,7 +32,7 @@ const MainPage = ({ endpoint }) => {
         fetchData()
     }, [endpoint, dispatch])
 
-    const allPosts = useSelector((state) => state.posts.allPosts)
+    const allPosts = useSelector(selectPosts)
 
     return (
         <div>
