@@ -37,8 +37,12 @@ const MainPage = ({ endpoint }) => {
     return (
         <div>
             {allPosts &&
-                allPosts.map((post, index) => (
-                    <CompactPost key={post.data.id} postIndex={index} />
+                allPosts.map((post) => (
+                    <CompactPost
+                        key={post.data.id}
+                        postId={post.data.id}
+                        post={post.data}
+                    />
                 ))}
         </div>
     )

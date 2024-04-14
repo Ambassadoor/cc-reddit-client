@@ -4,29 +4,35 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectPosts } from '../../store/selectors'
 import he from 'he'
 
-const CompactPost = ({ postIndex }) => {
+const CompactPost = ({ postId, post }) => {
     const dispatch = useDispatch()
-    const post = useSelector(selectPosts)[postIndex]
 
     useEffect(() => {
-        const grabPost = () => {
-            dispatch(loadPost(post))
-        }
-        grabPost()
+        dispatch(loadPost(post))
     }, [post, dispatch])
+
+    const thisPost = useSelector((state) => state.compactPosts[postId])
 
     return (
         <div>
-            {post && <h3>{post.data.title}</h3>}
-            {post.data.post_hint === 'image' && (
-                <img
-                    src={he.decode(post.data.preview.images[0].source.url)}
-                    alt=""></img>
-            )}
-            {post.data.post_hint === 'hosted:video' && (
-                <video
-                    controls
-                    src={post.data.media.reddit_video.fallback_url}></video>
+            {thisPost && (
+                <>
+                    <h3>{thisPost.title}</h3>
+                    {thisPost.hint === 'image' && (
+                        <img
+                            src={he.decode(
+                                thisPost.preview.images[0].source.url
+                            )}
+                            alt=""
+                        />
+                    )}
+                    {thisPost.hint === 'hosted:video' && (
+                        <video
+                            controls
+                            src={thisPost.media.reddit_video.fallback_url}
+                        />
+                    )}
+                </>
             )}
         </div>
     )
