@@ -6,18 +6,27 @@ const photoCarouselSlice = createSlice({
     reducers: {
         loadGallery(state, action) {
             const { galleryImages, galleryId } = action.payload
-
             return {
                 ...state,
                 [galleryId]: {
-                    images: galleryImages,
-                    displayedImage: 0,
+                    gallery: galleryImages,
+                    renderedImageIndex: 0,
+                },
+            }
+        },
+        selectImage(state, action) {
+            const { imageIndex, galleryId } = action.payload
+            return {
+                ...state,
+                [galleryId]: {
+                    ...state[galleryId],
+                    renderedImageIndex: imageIndex,
                 },
             }
         },
     },
 })
 
-export const { loadGallery } = photoCarouselSlice.actions
+export const { loadGallery, selectImage } = photoCarouselSlice.actions
 
 export default photoCarouselSlice.reducer

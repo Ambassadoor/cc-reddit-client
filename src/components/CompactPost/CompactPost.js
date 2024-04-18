@@ -42,7 +42,8 @@ const CompactPost = ({ postId, post }) => {
                     )}
                     {thisPost.isGallery && (
                         <PhotoCarousel
-                            gallery={thisPost.mediaMetaData}></PhotoCarousel>
+                            gallery={thisPost.mediaMetaData}
+                            galleryId={thisPost.id}></PhotoCarousel>
                     )}
                 </>
             )}
