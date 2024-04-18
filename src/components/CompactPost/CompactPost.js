@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { loadPost } from './compactPostSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectPosts } from '../../store/selectors'
+
 import he from 'he'
-import PhotoCarousel from '../PhotoCarousel/photoCarousel'
+import PhotoCarousel from '../PhotoCarousel/PhotoCarousel'
 
 const CompactPost = ({ postId, post }) => {
     const dispatch = useDispatch()
