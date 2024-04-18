@@ -39,26 +39,32 @@ const PhotoCarousel = ({ gallery, galleryId }) => {
     }
 
     return (
-        <div>
+        <div className='photo-carousel-container'>
             {thisGallery && (
                 <>
+                    <div className='photo-carousel-button-container'>
                     <button
+                        className='photo-carousel-button'
                         onClick={prevImage}
                         disabled={currentImageIndex === 0}>
                         Prev
                     </button>
                     <button
+                        className='photo-carousel-button'
                         onClick={nextImage}
                         disabled={currentImageIndex === thisGallery.length - 1}>
                         Next
                     </button>
+                    </div>
                     <img
+                        className='photo-carousel-image'
                         src={he.decode(thisGallery[currentImageIndex])}
                         alt=""
                     />
                 </>
             )}
         </div>
+        
     )
 }
 

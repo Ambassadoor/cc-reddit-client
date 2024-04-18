@@ -15,12 +15,13 @@ const CompactPost = ({ postId, post }) => {
     const thisPost = useSelector((state) => state.compactPosts[postId])
 
     return (
-        <div>
+        <div className='compact-post-container'>
             {thisPost && !thisPost.stickied && (
                 <>
-                    <h3>{thisPost.title}</h3>
+                    <h3 className='post-title'>{thisPost.title}</h3>
                     {thisPost.hint === 'image' && (
                         <img
+                            className='post-image'
                             src={he.decode(
                                 thisPost.preview.images[0].source.url
                             )}
@@ -29,12 +30,14 @@ const CompactPost = ({ postId, post }) => {
                     )}
                     {thisPost.hint === 'hosted:video' && (
                         <video
+                            className='post-video'
                             controls
                             src={thisPost.media.reddit_video.fallback_url}
                         />
                     )}
                     {thisPost.hint === 'self' || thisPost.isSelf && (
                         <div
+                            className='post-text'
                             dangerouslySetInnerHTML={{
                                 __html: he.decode(thisPost.text),
                             }}
@@ -42,6 +45,7 @@ const CompactPost = ({ postId, post }) => {
                     )}
                     {thisPost.isGallery && (
                         <PhotoCarousel
+                            className='photo-carousel'
                             gallery={thisPost.mediaMetaData}
                             galleryId={thisPost.id}></PhotoCarousel>
                     )}
