@@ -33,6 +33,7 @@ const compactPostSlice = createSlice({
                     mediaMetaData: post.media_metadata,
                     permalink: post.permalink,
                     isGallery: post.is_gallery,
+                    isSelf: post.is_self
                 },
             }
         },

@@ -33,7 +33,7 @@ const CompactPost = ({ postId, post }) => {
                             src={thisPost.media.reddit_video.fallback_url}
                         />
                     )}
-                    {thisPost.hint === 'self' && (
+                    {thisPost.hint === 'self' || thisPost.isSelf && (
                         <div
                             dangerouslySetInnerHTML={{
                                 __html: he.decode(thisPost.text),
