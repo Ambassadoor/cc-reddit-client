@@ -38,6 +38,7 @@ const MainPage = ({ endpoint }) => {
         <div className='main-page-container'>
             {allPosts &&
                 allPosts.map((post) => (
+                    !post.data.stickied &&
                     <CompactPost
                         className='compact-post'
                         key={post.data.id}

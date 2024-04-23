@@ -16,7 +16,7 @@ const CompactPost = ({ postId, post }) => {
 
     return (
         <div className='compact-post-container'>
-            {thisPost && !thisPost.stickied && (
+            {thisPost && (
                 <>
                     <h3 className='post-title'>{thisPost.title}</h3>
                     {thisPost.hint === 'image' && (
