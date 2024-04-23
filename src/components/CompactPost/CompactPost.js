@@ -15,13 +15,13 @@ const CompactPost = ({ postId, post }) => {
     const thisPost = useSelector((state) => state.compactPosts[postId])
 
     return (
-        <div className='compact-post-container'>
+        <div className="compact-post-container">
             {thisPost && (
                 <>
-                    <h3 className='post-title'>{thisPost.title}</h3>
+                    <h3 className="post-title">{thisPost.title}</h3>
                     {thisPost.hint === 'image' && (
                         <img
-                            className='post-image'
+                            className="post-image"
                             src={he.decode(
                                 thisPost.preview.images[0].source.url
                             )}
@@ -30,24 +30,26 @@ const CompactPost = ({ postId, post }) => {
                     )}
                     {thisPost.hint === 'hosted:video' && (
                         <video
-                            className='post-video'
+                            className="post-video"
                             controls
                             src={thisPost.media.reddit_video.fallback_url}
                         />
                     )}
-                    {thisPost.hint === 'self' || thisPost.isSelf && (
-                        <div
-                            className='post-text'
-                            dangerouslySetInnerHTML={{
-                                __html: he.decode(thisPost.text),
-                            }}
-                        />
-                    )}
+                    {(thisPost.hint === 'self' ||
+                        thisPost.isSelf) && (
+                            <div
+                                className="post-text"
+                                dangerouslySetInnerHTML={{
+                                    __html: he.decode(thisPost.text),
+                                }}
+                            />
+                        )}
                     {thisPost.isGallery && (
                         <PhotoCarousel
-                            className='photo-carousel'
+                            className="photo-carousel"
                             gallery={thisPost.mediaMetaData}
-                            galleryId={thisPost.id}></PhotoCarousel>
+                            galleryId={thisPost.id}
+                            galleryData={thisPost.galleryData}></PhotoCarousel>
                     )}
                 </>
             )}

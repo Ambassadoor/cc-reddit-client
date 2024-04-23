@@ -2,14 +2,21 @@ import React, { useEffect, useMemo } from 'react'
 
 import he from 'he'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadGallery, selectImage } from './photoCarouselSlice'
+import {loadGallery, selectImage } from './photoCarouselSlice'
 
-const PhotoCarousel = ({ gallery, galleryId }) => {
+const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
     const dispatch = useDispatch()
+
     const galleryImages = useMemo(
-        () => Object.values(gallery).map((image) => image.s.u),
-        [gallery]
+        () =>
+            galleryData.items.map((element) => {
+                const id = element.media_id
+                return gallery[id].s.u
+            }),
+        [galleryData.items, gallery]
     )
+
+
 
     useEffect(() => {
         dispatch(loadGallery({ galleryImages, galleryId }))
@@ -22,6 +29,12 @@ const PhotoCarousel = ({ gallery, galleryId }) => {
         (state) => state.photoCarousel[galleryId]?.renderedImageIndex
     )
 
+    const maxImageHeight = useSelector(
+        (state) => state.photoCarousel[galleryId]?.maxHeight
+    )
+
+    const lastIndex = thisGallery?.length - 1
+
     const prevImage = () => {
         if (currentImageIndex > 0) {
             dispatch(
@@ -31,7 +44,7 @@ const PhotoCarousel = ({ gallery, galleryId }) => {
     }
 
     const nextImage = () => {
-        if (currentImageIndex < thisGallery.length - 1) {
+        if (currentImageIndex < lastIndex) {
             dispatch(
                 selectImage({ imageIndex: currentImageIndex + 1, galleryId })
             )
@@ -39,32 +52,41 @@ const PhotoCarousel = ({ gallery, galleryId }) => {
     }
 
     return (
-        <div className='photo-carousel-container'>
+        <div className="photo-carousel-container">
             {thisGallery && (
                 <>
-                    <div className='photo-carousel-button-container'>
-                    <button
-                        className='photo-carousel-button'
-                        onClick={prevImage}
-                        disabled={currentImageIndex === 0}>
-                        Prev
-                    </button>
-                    <button
-                        className='photo-carousel-button'
-                        onClick={nextImage}
-                        disabled={currentImageIndex === thisGallery.length - 1}>
-                        Next
-                    </button>
+                    <div className="photo-carousel-button-container">
+                        <button
+                            className="photo-carousel-button"
+                            onClick={prevImage}
+                            disabled={currentImageIndex === 0}>
+                            Prev
+                        </button>
+                        <button
+                            className="photo-carousel-button"
+                            onClick={nextImage}
+                            disabled={currentImageIndex === lastIndex}>
+                            Next
+                        </button>
                     </div>
-                    <img
-                        className='photo-carousel-image'
-                        src={he.decode(thisGallery[currentImageIndex])}
-                        alt=""
-                    />
+                    <div
+                        style={{
+                            display: 'flex',
+                            width: '50vw',
+                            height: Math.max(Math.min(...Object.values(gallery).map((image) => (image.s.y/image.s.x) * window.innerWidth * 0.5)),window.innerHeight * 0.25),
+                            justifyContent: 'center',
+                            objectFit: 'cover'
+                        }}>
+                        <p>{maxImageHeight}</p>
+                        <img
+                            className="photo-carousel-image"
+                            src={he.decode(thisGallery[currentImageIndex])}
+                            alt=""
+                        />
+                    </div>
                 </>
             )}
         </div>
-        
     )
 }
 

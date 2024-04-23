@@ -20,6 +20,9 @@ code {
     margin: 0 auto;
 }
 
+.compact-post-container {
+    width: 100%;
+}
 .post-video {
     max-width: 100%;
 }
@@ -31,4 +34,7 @@ code {
 
 .photo-carousel-image {
     max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
 }

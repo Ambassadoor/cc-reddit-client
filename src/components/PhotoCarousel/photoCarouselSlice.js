@@ -24,9 +24,19 @@ const photoCarouselSlice = createSlice({
                 },
             }
         },
+        setMaxHeight(state, action) {
+            const { maxHeight, galleryId } = action.payload
+            return {
+                ...state,
+                [galleryId]: {
+                              maxHeight: maxHeight,
+                },
+            }
+        },
     },
 })
 
-export const { loadGallery, selectImage } = photoCarouselSlice.actions
+export const { loadGallery, selectImage, setMaxHeight } =
+    photoCarouselSlice.actions
 
 export default photoCarouselSlice.reducer

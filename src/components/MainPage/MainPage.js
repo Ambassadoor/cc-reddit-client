@@ -35,17 +35,19 @@ const MainPage = ({ endpoint }) => {
     const allPosts = useSelector(selectPosts)
 
     return (
-        <div className='main-page-container'>
+        <div className="main-page-container">
             {allPosts &&
-                allPosts.map((post) => (
-                    !post.data.stickied &&
-                    <CompactPost
-                        className='compact-post'
-                        key={post.data.id}
-                        postId={post.data.id}
-                        post={post.data}
-                    />
-                ))}
+                allPosts.map(
+                    (post) =>
+                        !post.data.stickied && (
+                            <CompactPost
+                                className="compact-post"
+                                key={post.data.id}
+                                postId={post.data.id}
+                                post={post.data}
+                            />
+                        )
+                )}
         </div>
     )
 }
