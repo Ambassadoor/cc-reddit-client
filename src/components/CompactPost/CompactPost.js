@@ -35,15 +35,14 @@ const CompactPost = ({ postId, post }) => {
                             src={thisPost.media.reddit_video.fallback_url}
                         />
                     )}
-                    {(thisPost.hint === 'self' ||
-                        thisPost.isSelf) && (
-                            <div
-                                className="post-text"
-                                dangerouslySetInnerHTML={{
-                                    __html: he.decode(thisPost.text),
-                                }}
-                            />
-                        )}
+                    {(thisPost.hint === 'self' || thisPost.isSelf) && (
+                        <div
+                            className="post-text"
+                            dangerouslySetInnerHTML={{
+                                __html: he.decode(thisPost.text),
+                            }}
+                        />
+                    )}
                     {thisPost.isGallery && (
                         <PhotoCarousel
                             className="photo-carousel"

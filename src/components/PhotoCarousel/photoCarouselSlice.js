@@ -11,6 +11,7 @@ const photoCarouselSlice = createSlice({
                 [galleryId]: {
                     gallery: galleryImages,
                     renderedImageIndex: 0,
+                    maxHeight: 0,
                 },
             }
         },
@@ -29,7 +30,8 @@ const photoCarouselSlice = createSlice({
             return {
                 ...state,
                 [galleryId]: {
-                              maxHeight: maxHeight,
+                    ...state[galleryId],
+                    maxHeight: maxHeight,
                 },
             }
         },
