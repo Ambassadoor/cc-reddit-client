@@ -20,13 +20,27 @@ const CompactPost = ({ postId, post }) => {
                 <>
                     <h3 className="post-title">{thisPost.title}</h3>
                     {thisPost.hint === 'image' && (
-                        <img
-                            className="post-image"
-                            src={he.decode(
-                                thisPost.preview.images[0].source.url
+                        <>
+                            {thisPost.preview.images[0].variants.gif ? (
+                                <video
+                                    autoPlay
+                                    loop
+                                    muted
+                                    src={he.decode(
+                                        thisPost.preview.images[0].variants.mp4
+                                            .source.url
+                                    )}
+                                />
+                            ) : (
+                                <img
+                                    className="post-image"
+                                    src={he.decode(
+                                        thisPost.preview.images[0].source.url
+                                    )}
+                                    alt=""
+                                />
                             )}
-                            alt=""
-                        />
+                        </>
                     )}
                     {thisPost.hint === 'hosted:video' && (
                         <video
