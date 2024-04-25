@@ -9,10 +9,9 @@ const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
 
     const galleryImages = useMemo(
         () =>
-            galleryData.items.map((element) => {
-                const id = element.media_id
-                return gallery[id].s.u
-            }),
+            galleryData.items
+                .filter((image) => gallery[image.media_id]?.status === 'valid')
+                .map((image) => gallery[image.media_id]?.s?.u),
         [galleryData.items, gallery]
     )
 
@@ -22,7 +21,7 @@ const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
                 Math.min(
                     ...Object.values(gallery).map(
                         (image) =>
-                            (image.s.y / image.s.x) * window.innerWidth * 0.5
+                            (image?.s?.y / image.s?.x) * window.innerWidth * 0.5
                     )
                 ),
                 window.innerHeight * 0.25
