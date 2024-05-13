@@ -7,8 +7,6 @@ import { loadGallery, selectImage, setMaxHeight } from './photoCarouselSlice'
 const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
     const dispatch = useDispatch()
 
-
-
     const galleryImages = useMemo(
         () =>
             galleryData.items
@@ -16,14 +14,18 @@ const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
                 .map((image) => {
                     const galleryObject = gallery[image.media_id]
                     const mediaId = image.media_id
-                    const mediaSrc = galleryObject?.s?.u || galleryObject?.s?.mp4
+                    const mediaSrc =
+                        galleryObject?.s?.u || galleryObject?.s?.mp4
                     const mediaType = galleryObject?.e
 
-                    return ({mediaId: mediaId, mediaSrc: mediaSrc, mediaType: mediaType})
+                    return {
+                        mediaId: mediaId,
+                        mediaSrc: mediaSrc,
+                        mediaType: mediaType,
+                    }
                 }),
         [galleryData.items, gallery]
     )
-
 
     const maxHeight = useMemo(
         () =>
@@ -73,15 +75,17 @@ const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
         }
     }
 
-    const mediaSrc = thisGallery && thisGallery[currentImageIndex] && he.decode(thisGallery[currentImageIndex]?.mediaSrc)
+    const mediaSrc =
+        thisGallery &&
+        thisGallery[currentImageIndex] &&
+        he.decode(thisGallery[currentImageIndex]?.mediaSrc)
 
-    const galleryTypes = {        
-        'Image': <img src={mediaSrc} alt='' />,
-        'AnimatedImage': <video autoPlay loop muted src={mediaSrc} />,
-        'Video': <video src={mediaSrc} />,
-        "External": <p>External Link</p>
-        };
-
+    const galleryTypes = {
+        Image: <img className='gallery-image' style={{maxHeight: maxImageHeight}} src={mediaSrc} alt="" />,
+        AnimatedImage: <video className='gallery-gif' style={{maxHeight: maxImageHeight}} autoPlay loop muted src={mediaSrc} />,
+        Video: <video className='gallery-video' style={{maxHeight: maxImageHeight}} src={mediaSrc} />,
+        External: <p>External Link</p>,
+    }
 
     return (
         <div className="photo-carousel-container">
@@ -102,14 +106,15 @@ const PhotoCarousel = ({ gallery, galleryId, galleryData }) => {
                         </button>
                     </div>
                     <div
+                        className='gallery-media-container'
                         style={{
-                            display: 'flex',
-                            width: '50vw',
-                            height: maxImageHeight,
-                            justifyContent: 'center',
-                            objectFit: 'cover',
+                            height: maxImageHeight
                         }}>
-                        {galleryTypes[thisGallery[currentImageIndex]?.mediaType]}
+                        {
+                            galleryTypes[
+                                thisGallery[currentImageIndex]?.mediaType
+                            ]
+                        }
                     </div>
                 </>
             )}

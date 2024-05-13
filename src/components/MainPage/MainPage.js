@@ -40,12 +40,18 @@ const MainPage = ({ endpoint }) => {
                 allPosts.map(
                     (post) =>
                         !post.data.stickied && (
-                            <CompactPost
-                                className="compact-post"
-                                key={post.data.id}
-                                postId={post.data.id}
-                                post={post.data}
-                            />
+                            <>
+                                <hr
+                                    style={{
+                                        borderTop: '1px solid gray',
+                                        width: '100%',
+                                    }}></hr>
+                                <CompactPost
+                                    key={post.data.id}
+                                    postId={post.data.id}
+                                    post={post.data}
+                                />
+                            </>
                         )
                 )}
         </div>

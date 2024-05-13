@@ -19,51 +19,61 @@ const CompactPost = ({ postId, post }) => {
             {thisPost && (
                 <>
                     <h3 className="post-title">{thisPost.title}</h3>
-                    {thisPost.hint === 'image' && (
-                        <>
-                            {thisPost.preview.images[0].variants.gif ? (
+                    <div className="post-content">
+                        <div className="post-media-container">
+                            {thisPost.hint === 'image' && (
+                                <>
+                                    {thisPost.preview.images[0].variants.gif ? (
+                                        <video
+                                            autoPlay
+                                            loop
+                                            muted
+                                            src={he.decode(
+                                                thisPost.preview.images[0]
+                                                    .variants.mp4.source.url
+                                            )}
+                                        />
+                                    ) : (
+                                        <img
+                                            className="post-image"
+                                            src={he.decode(
+                                                thisPost.preview.images[0]
+                                                    .source.url
+                                            )}
+                                            alt=""
+                                        />
+                                    )}
+                                </>
+                            )}
+                            {thisPost.hint === 'hosted:video' && (
                                 <video
-                                    autoPlay
-                                    loop
-                                    muted
-                                    src={he.decode(
-                                        thisPost.preview.images[0].variants.mp4
-                                            .source.url
-                                    )}
-                                />
-                            ) : (
-                                <img
-                                    className="post-image"
-                                    src={he.decode(
-                                        thisPost.preview.images[0].source.url
-                                    )}
-                                    alt=""
+                                    className="post-video"
+                                    controls
+                                    src={
+                                        thisPost.media.reddit_video.fallback_url
+                                    }
                                 />
                             )}
-                        </>
-                    )}
-                    {thisPost.hint === 'hosted:video' && (
-                        <video
-                            className="post-video"
-                            controls
-                            src={thisPost.media.reddit_video.fallback_url}
-                        />
-                    )}
-                    {(thisPost.hint === 'self' || thisPost.isSelf) && (
-                        <div
-                            className="post-text"
-                            dangerouslySetInnerHTML={{
-                                __html: he.decode(thisPost.text),
-                            }}
-                        />
-                    )}
-                    {thisPost.isGallery && (
-                        <PhotoCarousel
-                            className="photo-carousel"
-                            gallery={thisPost.mediaMetaData}
-                            galleryId={thisPost.id}
-                            galleryData={thisPost.galleryData}></PhotoCarousel>
-                    )}
+                            {thisPost.isGallery && (
+                                <PhotoCarousel
+                                    gallery={thisPost.mediaMetaData}
+                                    galleryId={thisPost.id}
+                                    galleryData={
+                                        thisPost.galleryData
+                                    }></PhotoCarousel>
+                            )}
+                        </div>
+                        <div className="post-text-container">
+                            {(thisPost.hint === 'self' || thisPost.isSelf) && (
+                                <div
+                                    className="post-text"
+                                    dangerouslySetInnerHTML={{
+                                        __html: he.decode(thisPost.text),
+                                    }}
+                                />
+                            )}
+                        </div>
+                    </div>
                 </>
             )}
         </div>
